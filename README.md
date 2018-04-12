@@ -65,6 +65,8 @@ Example of the representation of word:
 
 ### Data Loader
 
+To use the data loader, you need to first install the [CoNLL-U Parser](https://github.com/EmilStenstrom/conllu) built by [Emil Stenström](https://github.com/EmilStenstrom).
+
 The following is an example to use data_loader:
 
 
