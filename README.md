@@ -99,7 +99,7 @@ train_meta.head()
       <th>id</th>
       <th>doc_id</th>
       <th>sent</th>
-      <th>errors(FCE,count)</th>
+      <th>errors</th>
       <th>native_language</th>
       <th>age_range</th>
       <th>score</th>
@@ -110,7 +110,7 @@ train_meta.head()
       <th>1</th>
       <td>doc2664</td>
       <td>I was &lt;ns type="S"&gt;&lt;i&gt;shoked&lt;/i&gt;&lt;c&gt;shocked&lt;/c&gt;...</td>
-      <td>[(RV, 1), (S, 2)]</td>
+      <td>{'S': 2, 'RV': 1}</td>
       <td>Russian</td>
       <td>21-25</td>
       <td>21.0</td>
@@ -119,7 +119,7 @@ train_meta.head()
       <th>2</th>
       <td>doc648</td>
       <td>I am very sorry to say it was definitely not a...</td>
-      <td>[(MT, 1), (RT, 1)]</td>
+      <td>{'MT': 1, 'RT': 1}</td>
       <td>French</td>
       <td>26-30</td>
       <td>38.0</td>
@@ -128,7 +128,7 @@ train_meta.head()
       <th>3</th>
       <td>doc1081</td>
       <td>Of course, I became aware of her feelings sinc...</td>
-      <td>[(AGQ, 1)]</td>
+      <td>{'AGQ': 1}</td>
       <td>Spanish</td>
       <td>16-20</td>
       <td>36.0</td>
@@ -137,7 +137,7 @@ train_meta.head()
       <th>4</th>
       <td>doc724</td>
       <td>I also suggest that more plays and films shoul...</td>
-      <td>[(FV, 1), (RV, 1)]</td>
+      <td>{'FV': 1, 'RV': 1}</td>
       <td>Japanese</td>
       <td>21-25</td>
       <td>33.0</td>
@@ -146,7 +146,7 @@ train_meta.head()
       <th>5</th>
       <td>doc567</td>
       <td>Although my parents were very happy &lt;ns type="...</td>
-      <td>[(RJ, 1), (MT, 1), (FD, 1), (RT, 1)]</td>
+      <td>{'FD': 1, 'RT': 1, 'RJ': 1, 'MT': 1}</td>
       <td>Spanish</td>
       <td>31-40</td>
       <td>34.0</td>
@@ -164,8 +164,6 @@ train_data[0]
 
 
 
-
-<div>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
