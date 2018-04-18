@@ -82,34 +82,7 @@ test_meta, test_meta_corrected = meta_list
 train_data, train_data_corrected, \
 dev_data, dev_data_corrected, \
 test_data, test_data_corrected = data_list
-
-f = "csv" # or "json"
-data_loader.dump_preprocessed_data(name="train", train_meta, train_data, format=f)
-data_loader.dump_preprocessed_data(name="train_corrected", train_meta_corrected, train_data_corrected, format=f)
-data_loader.dump_preprocessed_data(name="dev", dev_meta, dev_data, format=f)
-data_loader.dump_preprocessed_data(name="dev_corrected", dev_meta_corrected, dev_data_corrected, format=f)
-data_loader.dump_preprocessed_data(name="test", test_meta, test_data, format=f)
-data_loader.dump_preprocessed_data(name="test_corrected", test_meta_corrected, test_data_corrected, format=f)
 ```
-
-    Load data (load_train=True, load_dev=True, load_test=True)
-    Load raw conllu dataset (load_train=True, load_dev=True, load_test=True)
-    Processing dataset/UD_English-ESL/data/en_esl-ud-train.conllu
-    Processing dataset/UD_English-ESL/data/corrected/en_cesl-ud-train.conllu
-    Processing dataset/UD_English-ESL/data/en_esl-ud-dev.conllu
-    Processing dataset/UD_English-ESL/data/corrected/en_cesl-ud-dev.conllu
-    Processing dataset/UD_English-ESL/data/en_esl-ud-test.conllu
-    Processing dataset/UD_English-ESL/data/corrected/en_cesl-ud-test.conllu
-    Build metadata
-    Build sentences
-    =================
-    Dump train to preprocessed/train
-    Dump train_corrected to preprocessed/train_corrected
-    Dump dev to preprocessed/dev
-    Dump dev_corrected to preprocessed/dev_corrected
-    Dump test to preprocessed/test
-    Dump test_corrected to preprocessed/test_corrected
-
 
 
 ```python
@@ -123,20 +96,13 @@ train_meta.head()
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
+      <th>id</th>
       <th>doc_id</th>
       <th>sent</th>
+      <th>errors(FCE,count)</th>
       <th>native_language</th>
       <th>age_range</th>
       <th>score</th>
-    </tr>
-    <tr>
-      <th>id</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -144,6 +110,7 @@ train_meta.head()
       <th>1</th>
       <td>doc2664</td>
       <td>I was &lt;ns type="S"&gt;&lt;i&gt;shoked&lt;/i&gt;&lt;c&gt;shocked&lt;/c&gt;...</td>
+      <td>[(RV, 1), (S, 2)]</td>
       <td>Russian</td>
       <td>21-25</td>
       <td>21.0</td>
@@ -152,6 +119,7 @@ train_meta.head()
       <th>2</th>
       <td>doc648</td>
       <td>I am very sorry to say it was definitely not a...</td>
+      <td>[(MT, 1), (RT, 1)]</td>
       <td>French</td>
       <td>26-30</td>
       <td>38.0</td>
@@ -160,6 +128,7 @@ train_meta.head()
       <th>3</th>
       <td>doc1081</td>
       <td>Of course, I became aware of her feelings sinc...</td>
+      <td>[(AGQ, 1)]</td>
       <td>Spanish</td>
       <td>16-20</td>
       <td>36.0</td>
@@ -168,6 +137,7 @@ train_meta.head()
       <th>4</th>
       <td>doc724</td>
       <td>I also suggest that more plays and films shoul...</td>
+      <td>[(FV, 1), (RV, 1)]</td>
       <td>Japanese</td>
       <td>21-25</td>
       <td>33.0</td>
@@ -176,6 +146,7 @@ train_meta.head()
       <th>5</th>
       <td>doc567</td>
       <td>Although my parents were very happy &lt;ns type="...</td>
+      <td>[(RJ, 1), (MT, 1), (FD, 1), (RT, 1)]</td>
       <td>Spanish</td>
       <td>31-40</td>
       <td>34.0</td>
@@ -195,11 +166,10 @@ train_data[0]
 
 
 <div>
-
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
+      <th>id</th>
       <th>form</th>
       <th>lemma</th>
       <th>upostag</th>
@@ -210,19 +180,6 @@ train_data[0]
       <th>deps</th>
       <th>misc</th>
       <th>meta_id</th>
-    </tr>
-    <tr>
-      <th>id</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -456,4 +413,3 @@ train_data[0]
 Dumped files are under ./preprocessed/[name]/. 
 - meta.csv: the same format as the above variable "train_meta"
 - [number].csv: the same format as the above variable "train_data[0]"
-
