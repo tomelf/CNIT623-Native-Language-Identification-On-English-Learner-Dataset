@@ -101,10 +101,6 @@ def main():
     train_pred = grid_search.fit(train_data_df, train_actual).predict(train_data_df)
     test_pred = grid_search.predict(test_data_df)
     
-    print(pipeline.named_steps['union'].get_feature_names())
-    
-    return
-    
     # with open("task3_test_funcwords.txt", "w") as output:
     # with open("task3_test_charngrams.txt", "w") as output:
     # with open("task3_test_wordngrams.txt", "w") as output:
