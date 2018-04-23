@@ -1,0 +1,36 @@
+Evaluate train performance
+Train report:
+              precision    recall  f1-score   support
+
+    Chinese       0.06      0.03      0.04       414
+     French       0.05      0.12      0.07       401
+     German       0.07      0.12      0.09       400
+    Italian       0.03      0.03      0.03       423
+   Japanese       0.08      0.04      0.05       407
+     Korean       0.06      0.03      0.04       413
+ Portuguese       0.02      0.01      0.01       407
+    Russian       0.04      0.04      0.04       427
+    Spanish       0.02      0.01      0.01       428
+    Turkish       0.09      0.18      0.12       404
+
+avg / total       0.05      0.06      0.05      4124
+
+Accuracy: 0.05940834141610087
+Evaluate test performance
+Testing report:
+              precision    recall  f1-score   support
+
+    Chinese       0.17      0.09      0.11        57
+     French       0.15      0.33      0.20        55
+     German       0.13      0.20      0.15        60
+    Italian       0.15      0.16      0.15        45
+   Japanese       0.33      0.07      0.11        46
+     Korean       0.00      0.00      0.00        44
+ Portuguese       0.00      0.00      0.00        56
+    Russian       0.02      0.02      0.02        41
+    Spanish       0.06      0.02      0.03        47
+    Turkish       0.09      0.18      0.12        49
+
+avg / total       0.11      0.11      0.09       500
+
+Accuracy: 0.112

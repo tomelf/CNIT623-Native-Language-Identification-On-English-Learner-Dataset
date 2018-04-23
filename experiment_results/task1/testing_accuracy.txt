@@ -1,0 +1,23 @@
+bi-lstm_lr-0.5_testing_stats
+
+Accuracy: 0.8800959232613909
+Predicted tags: 9591
+Number of POS tags: 18
+
+lstm_lr-0.5_testing_stats
+
+Accuracy: 0.8331769367115004
+Predicted tags: 9591
+Number of POS tags: 18
+
+bi-lstm_lr-0.1_testing_stats
+
+Accuracy: 0.7562297987696799
+Predicted tags: 9591
+Number of POS tags: 18
+
+lstm_lr-0.1_testing_stats
+
+Accuracy: 0.7089980189761235
+Predicted tags: 9591
+Number of POS tags: 18 
