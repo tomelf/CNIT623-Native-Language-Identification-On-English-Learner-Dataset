@@ -1,0 +1,32 @@
+Training results:
+             precision    recall  f1-score   support
+
+    Chinese       0.25      0.31      0.27       414
+     French       0.33      0.05      0.09       401
+     German       0.23      0.09      0.13       400
+    Italian       0.22      0.38      0.28       423
+   Japanese       0.28      0.10      0.14       407
+     Korean       0.23      0.23      0.23       413
+ Portuguese       0.23      0.05      0.08       407
+    Russian       0.18      0.37      0.25       427
+    Spanish       0.20      0.48      0.28       428
+    Turkish       0.26      0.07      0.11       404
+
+avg / total       0.24      0.22      0.19      4124
+
+Testing results:
+             precision    recall  f1-score   support
+
+    Chinese       0.13      0.12      0.13        57
+     French       0.23      0.05      0.09        55
+     German       0.21      0.07      0.10        60
+    Italian       0.15      0.27      0.19        45
+   Japanese       0.11      0.02      0.04        46
+     Korean       0.12      0.14      0.13        44
+ Portuguese       0.00      0.00      0.00        56
+    Russian       0.14      0.39      0.20        41
+    Spanish       0.15      0.45      0.23        47
+    Turkish       0.23      0.06      0.10        49
+
+avg / total       0.15      0.15      0.12       500
+
