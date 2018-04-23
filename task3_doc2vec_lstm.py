@@ -34,8 +34,8 @@ def main():
     label_to_ix_list = train_meta["native_language"].unique().tolist()
     label_to_ix = dict([(l,i+1) for i,l in enumerate(label_to_ix_list)])
     
-    for model_type in range(2):
-        if model_type==0:
+    for model_type in ["wordseqs", "posseqs"]:
+        if model_type=="wordseqs":
             # word sequences
             X_train = [[d["form"].tolist(), label_to_ix[train_meta["native_language"].iloc[i]]] for i,d in enumerate(train_data)]
             X_dev = [[d["form"].tolist(), label_to_ix[dev_meta["native_language"].iloc[i]]] for i,d in enumerate(dev_data)]
@@ -44,7 +44,7 @@ def main():
             HIDDEN_DIM = 200
             LABEL_DIM = len(label_to_ix)
             model = LSTMNLI(EMBEDDING_DIM, HIDDEN_DIM, LABEL_DIM, bidirectional=False)
-        else:
+        if model_type=="posseqs":
             # POS sequences
             X_train = [[d["upostag"].tolist(), label_to_ix[train_meta["native_language"].iloc[i]]] for i,d in enumerate(train_data)]
             X_dev = [[d["upostag"].tolist(), label_to_ix[dev_meta["native_language"].iloc[i]]] for i,d in enumerate(dev_data)]
