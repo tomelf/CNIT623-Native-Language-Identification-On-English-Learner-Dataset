@@ -1,0 +1,11 @@
+language,precision,recall,f1-score,support
+Chinese,0.17,0.09,0.11,57
+French,0.15,0.33,0.20,55
+German,0.13,0.20,0.15,60
+Italian,0.15,0.16,0.15,45
+Japanese,0.33,0.07,0.11,46
+Korean,0.00,0.00,0.00,44
+Portuguese,0.00,0.00,0.00,56
+Russian,0.02,0.02,0.02,41
+Spanish,0.06,0.02,0.03,47
+Turkish,0.09,0.18,0.12,49
