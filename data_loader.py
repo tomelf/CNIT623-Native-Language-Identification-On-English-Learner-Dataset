@@ -31,7 +31,8 @@ def conllu_meta_parse(text):
     ret_list = []
     for meta_info in meta_infos:
         error_list = re.findall('<ns type=\"([^\"]+)\">', meta_info[1])
-        errors = dict((ns, error_list.count(ns)) for ns in set(error_list))
+        # errors = dict((ns, error_list.count(ns)) for ns in set(error_list))
+        errors = error_list
         ret_list.append({"doc_id": meta_info[0], "sent": meta_info[1], "errors": errors})
     return ret_list
 

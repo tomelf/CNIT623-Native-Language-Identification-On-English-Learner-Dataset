@@ -1,6 +1,7 @@
 model,mean_train_score,mean_test_score,params
+errors,19.55%,14.28%,"{'clf__kernel': 'rbf', 'clf__C': 10, 'union__errors__tfidf__norm': 'l2'}"
 charngrams,22.49%,13.82%,"{'union__charngrams__reduce_dim__n_components': 100, 'clf__C': 20}"
 funcwords,23.13%,14.02%,"{'clf__kernel': 'rbf', 'clf__C': 20, 'union__funcwords__reduce_dim__n_components': 100}"
 posngrams,22.48%,14.65%,"{'clf__C': 20, 'union__posngrams__tfidf__ngram_range': (2, 2)}"
 wordngrams,19.59%,13.82%,"{'clf__C': 20, 'union__wordngrams__tfidf__ngram_range': (1, 1), 'union__wordngrams__reduce_dim__n_components': 50}"
-d2v,41.24%,15.98%,"{'clf__C': 20, 'clf__kernel': 'rbf'}"
+d2v,36.72%,15.71%,"{'clf__C': 10, 'clf__kernel': 'rbf'}"

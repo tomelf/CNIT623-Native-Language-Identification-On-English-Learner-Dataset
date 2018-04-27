@@ -37,7 +37,7 @@ def main():
     ])
     
     param_grid = dict(
-        clf__kernel=[ 'linear', 'poly', 'rbf'],
+        clf__kernel=['rbf'],
         clf__C=[0.1, 1, 10, 20])
     grid_search = GridSearchCV(pipeline, param_grid=param_grid, cv=5, verbose=10, return_train_score=True)
     
