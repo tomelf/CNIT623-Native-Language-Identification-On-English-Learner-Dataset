@@ -30,7 +30,7 @@ def conllu_meta_parse(text):
     ]
     ret_list = []
     for meta_info in meta_infos:
-        error_list = re.findall('<ns type=\"([^\"]+)\">', meta_info[1])
+        error_list = re.findall('<ns type=\"([^\"]+)\">', meta_info[1], flags=re.IGNORECASE)
         # errors = dict((ns, error_list.count(ns)) for ns in set(error_list))
         errors = error_list
         ret_list.append({"doc_id": meta_info[0], "sent": meta_info[1], "errors": errors})
@@ -65,7 +65,7 @@ def load_raw_conllu(load_train=True, load_dev=True, load_test=True):
         
     return meta_list, data_list
 
-def load_post_metadata():
+def load_post_metadata(with_ans=False):
     filepath = "dataset/UD_English-ESL/fce-released-dataset/dataset/"
     subpaths = [f for f in listdir(filepath) if isdir(join(filepath, f))]
     stats_raw = []
@@ -76,23 +76,55 @@ def load_post_metadata():
         for file in files:
             l_id = file.split('.')[0]
             file = join(subpath, file)
-            with open(file, 'rt') as f:
-                tree = ElementTree.parse(f)
-            for learner in tree.iter('learner'):
-                l_native_lan = None
-                l_age = None
-                l_score = None
-                for candidate in learner.iter('candidate'):
-                    for personnel in candidate.iter('personnel'):
-                        for language in personnel.iter('language'):
-                            l_native_lan = language.text
-                        for age in personnel.iter('age'):
-                            l_age = age.text
-                for score in learner.iter('score'):
-                    l_score = float(score.text)
-                row = [l_id, l_native_lan, l_age, l_score]
-                stats_raw.append(row)
-    cols = ['doc_id', 'native_language', 'age_range', 'score']
+            
+            l_native_lan = None
+            l_age = None
+            l_score = None
+            l_ans1 = None
+            l_ans1_errors = []
+            l_ans1_score = None
+            l_ans2 = None
+            l_ans2_errors = []
+            l_ans2_score = None
+            
+            learner = ElementTree.parse(file).getroot()
+            head = learner.find('head')
+            candidate = head.find('candidate')
+            personnel = candidate.find('personnel')
+            if personnel.find('language') != None:
+                l_native_lan = personnel.find('language').text
+            if personnel.find('age') != None:
+                l_age = personnel.find('age').text
+            if candidate.find('score') != None:
+                l_score = float(candidate.find('score').text)
+
+            text = head.find('text')
+            ans1 = text.find('answer1')
+            if ans1 != None:
+                if ans1.find('exam_score') != None:
+                    l_ans1_score = ans1.find('exam_score').text
+                if ans1.find('coded_answer') != None:
+                    l_ans1 = ElementTree.tostring(ans1.find('coded_answer'), method='html').decode().strip()
+                    l_ans1 = re.sub('<coded_answer>\n', '', l_ans1, flags=re.IGNORECASE).strip()
+                    l_ans1 = re.sub('</coded_answer>', '', l_ans1, flags=re.IGNORECASE).strip()
+                    l_ans1_errors = re.findall('<ns type=\"([^\"]+)\">', l_ans1, flags=re.IGNORECASE)
+            ans2 = text.find('answer2')
+            if ans2 != None:
+                if ans2.find('exam_score') != None:
+                    l_ans2_score = ans2.find('exam_score').text
+                if ans2.find('coded_answer') != None:
+                    l_ans2 = ElementTree.tostring(ans2.find('coded_answer'), method='html').decode().strip()
+                    l_ans2 = re.sub('<coded_answer>\n', '', l_ans2, flags=re.IGNORECASE).strip()
+                    l_ans2 = re.sub('</coded_answer>', '', l_ans2, flags=re.IGNORECASE).strip()
+                    l_ans2_errors = re.findall('<ns type=\"([^\"]+)\">', l_ans2, flags=re.IGNORECASE)
+
+            row = [l_id, l_native_lan, l_age, l_score, 
+                   l_ans1, l_ans1_errors, l_ans1_score, 
+                   l_ans2, l_ans2_errors, l_ans2_score]
+            stats_raw.append(row)
+    cols = ['doc_id', 'native_language', 'age_range', 'score', 
+            "ans1", "ans1_errors", "ans1_score", 
+            "ans2", "ans2_errors", "ans2_score"]
     stats_df = pd.DataFrame(stats_raw, columns=cols)
     return stats_df
 
@@ -154,13 +186,15 @@ def main():
     dev_data, dev_data_corrected, \
     test_data, test_data_corrected = data_list
     
-    f = "csv" # or "json"
-    dump_preprocessed_data("train", train_meta, train_data, format=f)
-    dump_preprocessed_data("train_corrected", train_meta_corrected, train_data_corrected, format=f)
-    dump_preprocessed_data("dev", dev_meta, dev_data, format=f)
-    dump_preprocessed_data("dev_corrected", dev_meta_corrected, dev_data_corrected, format=f)
-    dump_preprocessed_data("test", test_meta, test_data, format=f)
-    dump_preprocessed_data("test_corrected", test_meta_corrected, test_data_corrected, format=f)
+    print(train_meta.iloc[0].tolist())
+    
+    # f = "csv" # or "json"
+    # dump_preprocessed_data("train", train_meta, train_data, format=f)
+    # dump_preprocessed_data("train_corrected", train_meta_corrected, train_data_corrected, format=f)
+    # dump_preprocessed_data("dev", dev_meta, dev_data, format=f)
+    # dump_preprocessed_data("dev_corrected", dev_meta_corrected, dev_data_corrected, format=f)
+    # dump_preprocessed_data("test", test_meta, test_data, format=f)
+    # dump_preprocessed_data("test_corrected", test_meta_corrected, test_data_corrected, format=f)
 
 if __name__ == "__main__":
     main()

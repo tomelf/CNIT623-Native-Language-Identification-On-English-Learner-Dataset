@@ -1,5 +1,5 @@
 model,mean_train_score,mean_test_score,params
-errors,19.55%,14.28%,"{'clf__kernel': 'rbf', 'clf__C': 10, 'union__errors__tfidf__norm': 'l2'}"
+errors,29.69%,14.94%,"{'clf__C': 1, 'clf__kernel': 'rbf', 'union__errors__tfidf__norm': None}"
 charngrams,22.49%,13.82%,"{'union__charngrams__reduce_dim__n_components': 100, 'clf__C': 20}"
 funcwords,23.13%,14.02%,"{'clf__kernel': 'rbf', 'clf__C': 20, 'union__funcwords__reduce_dim__n_components': 100}"
 posngrams,22.48%,14.65%,"{'clf__C': 20, 'union__posngrams__tfidf__ngram_range': (2, 2)}"

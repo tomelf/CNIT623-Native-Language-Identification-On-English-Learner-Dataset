@@ -1,32 +1,32 @@
 Training results:
              precision    recall  f1-score   support
 
-    Chinese       0.22      0.19      0.20       414
-     French       0.16      0.20      0.18       401
-     German       0.18      0.24      0.21       400
-    Italian       0.17      0.20      0.19       423
-   Japanese       0.20      0.14      0.17       407
-     Korean       0.23      0.23      0.23       413
- Portuguese       0.18      0.18      0.18       407
-    Russian       0.26      0.14      0.18       427
-    Spanish       0.20      0.30      0.24       428
-    Turkish       0.17      0.12      0.14       404
+    Chinese       0.32      0.26      0.29       414
+     French       0.36      0.26      0.30       401
+     German       0.21      0.42      0.28       400
+    Italian       0.21      0.29      0.25       423
+   Japanese       0.29      0.18      0.22       407
+     Korean       0.22      0.40      0.29       413
+ Portuguese       0.36      0.26      0.30       407
+    Russian       0.46      0.22      0.30       427
+    Spanish       0.41      0.37      0.39       428
+    Turkish       0.36      0.21      0.27       404
 
-avg / total       0.20      0.19      0.19      4124
+avg / total       0.32      0.29      0.29      4124
 
 Testing results:
              precision    recall  f1-score   support
 
-    Chinese       0.17      0.12      0.14        57
-     French       0.15      0.15      0.15        55
-     German       0.12      0.15      0.14        60
-    Italian       0.11      0.16      0.13        45
-   Japanese       0.17      0.11      0.13        46
-     Korean       0.15      0.18      0.16        44
- Portuguese       0.16      0.12      0.14        56
-    Russian       0.15      0.07      0.10        41
-    Spanish       0.08      0.13      0.10        47
-    Turkish       0.14      0.14      0.14        49
+    Chinese       0.15      0.11      0.12        57
+     French       0.20      0.11      0.14        55
+     German       0.14      0.25      0.18        60
+    Italian       0.08      0.13      0.10        45
+   Japanese       0.23      0.15      0.18        46
+     Korean       0.14      0.25      0.18        44
+ Portuguese       0.17      0.09      0.12        56
+    Russian       0.17      0.07      0.10        41
+    Spanish       0.05      0.06      0.06        47
+    Turkish       0.24      0.18      0.21        49
 
-avg / total       0.14      0.13      0.13       500
+avg / total       0.16      0.14      0.14       500
 

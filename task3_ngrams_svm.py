@@ -27,10 +27,11 @@ def main():
     train_data, train_data_corrected, \
         test_data, test_data_corrected = data_list
     
-    train_data_df = [[" ".join(td["form"].tolist()), " ".join(td["upostag"].tolist())] for td in train_data]
-    test_data_df = [[" ".join(td["form"].tolist()), " ".join(td["upostag"].tolist())] for td in test_data]
-    train_data_df = pd.DataFrame(train_data_df, columns=["form", "upostag"])
-    test_data_df = pd.DataFrame(test_data_df, columns=["form", "upostag"])
+    train_data_df = [[" ".join(td["form"].tolist()), " ".join(td["upostag"].tolist()), " ".join(train_meta["errors"].iloc[i])] for i, td in enumerate(train_data)]
+    test_data_df = [[" ".join(td["form"].tolist()), " ".join(td["upostag"].tolist()), " ".join(test_meta["errors"].iloc[i])] for i, td in enumerate(test_data)]
+    cols = ["form", "upostag", "errors"]
+    train_data_df = pd.DataFrame(train_data_df, columns=cols)
+    test_data_df = pd.DataFrame(test_data_df, columns=cols)
     train_actual = train_meta["native_language"].tolist()
     test_actual = test_meta["native_language"].tolist()
     
@@ -45,6 +46,13 @@ def main():
     pipeline = Pipeline([
         ('union', FeatureUnion(
             transformer_list = [
+                ('errors', Pipeline([
+                        ('selector', ItemSelector(key='errors')),
+                        ('tfidf', TfidfVectorizer(analyzer="word", 
+                                                  ngram_range=(1,1), 
+                                                  lowercase=True)
+                        )
+                ])),
                 ('funcwords', Pipeline([
                         ('selector', ItemSelector(key='form')),
                         ('tfidf', TfidfVectorizer(analyzer="word", 
@@ -80,6 +88,7 @@ def main():
                 ])),
             ],
             transformer_weights={
+                'errors': 1,
                 'funcwords': 1,
                 'charngrams': 1,
                 'wordngrams': 1,
@@ -89,18 +98,21 @@ def main():
         ('clf', SVC(decision_function_shape='ovo', C=20)),
     ])
     
-    param_grid = dict(union__funcwords__reduce_dim__n_components=[10, 50, 100],
-                      union__charngrams__reduce_dim__n_components=[50, 100, 200],
-                      union__wordngrams__reduce_dim__n_components=[50, 100, 200],
-                      union__wordngrams__tfidf__ngram_range=[(1,1), (2,2), (1,2)],
-                      union__posngrams__tfidf__ngram_range=[(1,1), (2,2), (3,3), (1,3)],
-                      clf__kernel=['linear', 'poly', 'rbf'],
-                      clf__C=[0.1, 1, 10, 20])
+    param_grid = dict(
+        union__errors__tfidf__norm=['l1', 'l2', None],
+        union__funcwords__reduce_dim__n_components=[10, 50, 100],
+        union__charngrams__reduce_dim__n_components=[50, 100, 200],
+        union__wordngrams__reduce_dim__n_components=[50, 100, 200],
+        union__wordngrams__tfidf__ngram_range=[(1,1), (2,2), (1,2)],
+        union__posngrams__tfidf__ngram_range=[(1,1), (2,2), (3,3), (1,3)],
+        clf__kernel=['linear', 'poly', 'rbf'],
+        clf__C=[0.1, 1, 10, 20])
     grid_search = GridSearchCV(pipeline, param_grid=param_grid, cv=5, verbose=10, return_train_score=True)
     
     train_pred = grid_search.fit(train_data_df, train_actual).predict(train_data_df)
     test_pred = grid_search.predict(test_data_df)
     
+    # with open("task3_test_errors.txt", "w") as output:
     # with open("task3_test_funcwords.txt", "w") as output:
     # with open("task3_test_charngrams.txt", "w") as output:
     # with open("task3_test_wordngrams.txt", "w") as output:
@@ -111,6 +123,7 @@ def main():
     print(classification_report(train_actual, train_pred))
     print(classification_report(test_actual, test_pred))
     
+    # pd.DataFrame(grid_search.cv_results_).to_csv("task3_grid_search_errors.csv")
     # pd.DataFrame(grid_search.cv_results_).to_csv("task3_grid_search_funcwords.csv")
     # pd.DataFrame(grid_search.cv_results_).to_csv("task3_grid_search_charngrams.csv")
     # pd.DataFrame(grid_search.cv_results_).to_csv("task3_grid_search_wordngrams.csv")
